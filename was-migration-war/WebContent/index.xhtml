@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:loadBundle basename="resources.application" var="msg" />
+
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/resources/img/favicon.png" />
+	<h:outputStylesheet library="css" name="system-default.css" />
+</h:head>
+
+<h:body styleClass="gradientBack">
+
+	<br />
+
+	<div style="margin-left: 15px">
+		<div style="float: left; margin-right: 15px">
+			<p:graphicImage url="resources/img/logo.png" />
+		</div>
+		<h3 style="float: left; margin-right: 15px; color: #547DAB">#{msg.welcomeHeading}</h3>
+		<br /> <br style="margin-top: 15px" />
+	</div>
+
+	<br /> 
+	
+	<h5 style="text-align: center; margin-bottom: 3px; color: #547DAB">#{msg.welcomeMessage}:</h5>
+
+	<div style="width:100px; margin:0 auto; display: block">
+		<p:clock displayMode="analog" />
+	</div>
+	<div style="width:125px; margin:0 auto; margin-bottom: 5px; display: block">
+		<p:clock pattern="dd/MM/yyyy HH:mm:ss"/>
+	</div>
+	
+	<ui:include src="WEB-INF/templates/loader.xhtml" />
+
+	<p:panelGrid columns="2"
+		style="margin:0 auto; display:block; width: 650px">
+
+		<p:chart type="pie" model="#{indexBean.pieModel}"
+			style="width:400px; height:300px" />
+
+
+
+		<p:panelGrid columns="2"
+			style="margin:0 auto; display:block; width: 200px"
+			columnClasses="alignLeft , alignCenter">
+			<f:facet name="header">
+				<p:outputLabel value="Quantidade de aplicativos cadastrados: " />
+				<p:outputLabel value="#{indexBean.total}" />
+			</f:facet>
+			<p:outputLabel value="Em andamento: " />
+			<p:outputLabel value="#{indexBean.andamento}" />
+			<p:outputLabel value="Pendentes para migração: " />
+			<p:outputLabel value="#{indexBean.pendentes}" />
+			<p:outputLabel value="Finalizados: " />
+			<p:outputLabel value="#{indexBean.finalizados}" />
+
+			<f:facet name="footer">
+				<p:commandButton rendered="#{indexBean.test()}"
+					value="#{msg.indexButton}"
+					style="margin:0 auto; display:block; width:150px"
+					action="content/wasmigration/home-wasmigration.xhtml?faces-redirect=true" />
+			</f:facet>
+
+		</p:panelGrid>
+
+
+	</p:panelGrid>
+
+	<br />
+
+</h:body>
+
+</html>

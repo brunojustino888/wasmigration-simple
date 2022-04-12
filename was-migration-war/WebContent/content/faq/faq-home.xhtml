@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/resources/img/favicon.png" />
+	<h:outputStylesheet library="css" name="system-default.css" />
+</h:head>
+
+<h:body>
+
+	<ui:composition template="../../WEB-INF/templates/layout.xhtml">
+
+		<ui:define name="content">
+
+			<br />
+
+			<p:panel style="width:98%; margin:0 auto; display:block">
+
+				<h:form>
+
+					<p:growl showSummary="true" showDetail="false" />
+					<p:messages showDetail="true" showSummary="false" />
+
+					<h2 align="center" class="textDefault">FAQ - Dúvidas
+						frequentes</h2>
+					<h5 align="center">Abaixo você poderá encontrar dicas e
+						dúvidas frequentes pertinentes ao processo de migração</h5>
+
+					<p:dataGrid var="item" value="#{faqHomeBean.listaDTO}" columns="3"
+						layout="grid" rows="12" paginator="true" id="faqItensTable"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+						<f:facet name="header">FAQ</f:facet>
+
+						<p:panel header="#{item.idNumber} - #{item.title}"
+							style="text-align:center">
+							<h:panelGrid columns="1" style="width:100%">
+
+								<h:outputText value="#{item.shortdescription}" />
+
+								<h:panelGroup>
+									<p:commandButton update="@form"
+										oncomplete="PF('faqDialog').show()" title="Detalhes"
+										icon="fa fa-search">
+										<f:setPropertyActionListener value="#{item}"
+											target="#{faqHomeBean.selectedItem}" />
+									</p:commandButton>
+									<p:commandButton update="@form"
+										oncomplete="PF('editDialog').show()" title="Editar"
+										icon="fa fa-edit">
+										<f:setPropertyActionListener value="#{item}"
+											target="#{faqHomeBean.selectedItem}" />
+									</p:commandButton>
+									<p:commandButton update="@form"
+										oncomplete="PF('excludeDialog').show()" title="Excluir"
+										icon="fa fa-trash">
+										<f:setPropertyActionListener value="#{item}"
+											target="#{faqHomeBean.selectedItem}" />
+									</p:commandButton>
+								</h:panelGroup>
+
+							</h:panelGrid>
+
+						</p:panel>
+
+					</p:dataGrid>
+
+					<p:dialog header="FAQ Info" widgetVar="faqDialog" modal="true"
+						showEffect="fade" hideEffect="fade" resizable="false">
+						<p:outputPanel id="faqDetail" style="text-align:center;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty faqHomeBean.selectedItem}"
+								columnClasses="label,value">
+								<h:outputText value="Id:" />
+								<h:outputText value="#{faqHomeBean.selectedItem.idNumber}" />
+								<h:outputText value="Título:" />
+								<h:outputText value="#{faqHomeBean.selectedItem.title}" />
+								<h:outputText value="Descrição" />
+								<h:outputText value="#{faqHomeBean.selectedItem.description}" />
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
+
+					<p:dialog header="FAQ Info" widgetVar="editDialog" modal="true"
+						showEffect="fade" hideEffect="fade" resizable="false">
+						<p:outputPanel id="editDetail" style="text-align:center;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty faqHomeBean.selectedItem}"
+								columnClasses="label,value">
+								<h:outputText value="Id:" />
+								<h:outputText value="#{faqHomeBean.selectedItem.idNumber}" />
+								<h:outputText value="Título:" />
+								<h:inputText value="#{faqHomeBean.selectedItem.title}" />
+								<h:outputText value="Descrição" />
+								<h:inputTextarea style="width:500px; height:300px"
+									value="#{faqHomeBean.selectedItem.description}" />
+							</p:panelGrid>
+							<div>
+								<p:commandButton value="Alterar dados" oncomplete="PF('editDialog').hide()" update="@form" action="#{faqHomeBean.editar()}"
+									style="margin:0 auto; display:block; width:100px" />
+							</div>
+						</p:outputPanel>
+					</p:dialog>
+
+					<p:dialog header="Excluir" widgetVar="excludeDialog" modal="true"
+						showEffect="fade" hideEffect="fade" resizable="false">
+						<h:panelGrid columns="1"
+							rendered="#{not empty faqHomeBean.selectedItem}"
+							style="text-align:center">
+							<h:outputText value="Você confirma a exclusão desse item?" />
+							<p:commandButton value="Confirmar exclusão" update="@form"
+								style="margin:0 auto; display: block"
+								action="#{faqHomeBean.excluir()}"
+								oncomplete="PF('excludeDialog').hide()" />
+						</h:panelGrid>
+					</p:dialog>
+
+				</h:form>
+
+			</p:panel>
+
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

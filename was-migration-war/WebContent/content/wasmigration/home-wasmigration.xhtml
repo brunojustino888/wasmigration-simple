@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/resources/img/favicon.png" />
+	<h:outputStylesheet library="css" name="system-default.css" />
+</h:head>
+
+<h:body>
+
+	<ui:composition template="../../WEB-INF/templates/layout.xhtml">
+
+		<ui:define name="content">
+
+			<br />
+
+			<p:panel style="width:98%; margin:0 auto; display:block">
+
+				<h:form>
+
+					<p:growl showSummary="true" showDetail="false" />
+					<p:messages showDetail="true" showSummary="false" />
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:commandButton
+								action="include-wasmigration.xhtml?faces-redirect=true"
+								value="Novo aplicativo" icon="ui-icon-document" />
+						</f:facet>
+
+						<f:facet name="right">
+							<p:menuButton value="Configurações">
+								<p:menuitem value=" - Importar planilha" icon="ui-icon-disk"
+									action="import-wasmigration.xhtml?faces-redirect=true"
+									immediate="true" />
+								<p:menuitem value=" - Exportar..." icon="ui-icon-extlink" action="export-wasmigration.xhtml?faces-redirect=true"/>
+							</p:menuButton>
+						</f:facet>
+					</p:toolbar>
+
+					<h2 align="center" class="textDefault">Aplicativos</h2>
+					<h5 align="center">
+						<span style="color: #400040">Obs:</span> As colunas podem ser
+						utilizadas para filtrar os registros exibidos. <br />Clique no
+						título da coluna para aplicar o filtro.
+					</h5>
+
+					<p:dataTable style="width:100%" value="#{homeBean.appList}"
+						var="item" id="appTable" paginator="true" rows="10"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+						paginatorPosition="bottom">
+
+						<p:column style="width:4%">
+							<p:rowToggler />
+						</p:column>
+
+						<p:column styleClass="idNumberColumn" width="4%"
+							sortBy="#{item.idNumber}">
+							<f:facet name="header">Id</f:facet>
+							<p:outputLabel value="#{item.idNumber}" />
+						</p:column>
+
+						<p:column styleClass="centroCustoColumn" width="8%">
+							<f:facet name="header">Centro de custo</f:facet>
+							<p:outputLabel value="#{item.centroCusto}" />
+						</p:column>
+
+						<p:column styleClass="statusColumn" width="14%"
+							sortBy="#{item.status}">
+							<f:facet name="header">Status</f:facet>
+							<p:outputLabel value="#{item.status}" />
+						</p:column>
+
+						<p:column styleClass="dataPrevistaTerminoColumn" width="8%"
+							sortBy="#{item.dataPrevistaTermino}">
+							<f:facet name="header">Data prevista p/ término</f:facet>
+							<p:outputLabel value="#{item.dataPrevistaTermino}"
+								rendered="#{not empty item.dataPrevistaTermino}">
+								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+							<p:outputLabel value=" - / / - "
+								rendered="#{empty item.dataPrevistaTermino}" />
+						</p:column>
+
+						<p:column styleClass="dataPrevistaTerminoColumn" width="8%"
+							sortBy="#{item.dataTermino}">
+							<f:facet name="header">Data da migração</f:facet>
+							<p:outputLabel value="#{item.dataTermino}"
+								rendered="#{not empty item.dataTermino}">
+								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+									timeZone="America/Sao_Paulo" />
+							</p:outputLabel>
+							<p:outputLabel value="Pendente para migração."
+								rendered="#{empty item.dataTermino}" />
+						</p:column>
+
+						<p:column styleClass="acoes" width="8%">
+							<f:facet name="header">Ações</f:facet>
+							<p:commandButton action="#{homeBean.migrar(item.idNumber)}"
+								disabled="#{item.status eq 'Finalizado'}" update="@form"
+								title="Migrar" icon="ui-icon-check">
+								<p:confirm header="Confirmação"
+									message="Você confirma a migração para esse applicativo?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:commandButton title="Editar" icon="ui-icon-pencil"
+								action="#{homeBean.edit()}">
+								<f:setPropertyActionListener value="#{item.idNumber}"
+									target="#{homeBean.editItem}" />
+								<p:confirm header="Confirmação"
+									message="Você deseja editar as informações desse aplicativo?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:commandButton action="#{homeBean.excluir(item.idNumber)}"
+								update="@form" title="Excluir" icon="ui-icon-trash">
+								<p:confirm header="Confirmação"
+									message="Você confirma a exclusão?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade" closable="false">
+								<div
+									style="margin: 0 auto; display: block; width: 100%; margin-left: 3px">
+									<p:commandButton value="Confirmar"
+										style="margin:0 auto; display:block;   float: left"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Cancelar"
+										style="margin:0 auto; display:block;   float: right"
+										type="button" styleClass="ui-confirmdialog-no"
+										icon="ui-icon-close" />
+								</div>
+							</p:confirmDialog>
+						</p:column>
+
+						<p:rowExpansion>
+
+							<p:panelGrid columns="2"
+								columnClasses="labelSubTable, valueSubTable">
+
+								<p:outputLabel value="Observação:" />
+								<p:outputLabel value="#{item.observacao}" />
+
+								<p:outputLabel value="Acesso StarTeam:" />
+								<p:outputLabel value="#{item.acessoStarteam}" />
+
+								<p:outputLabel value="Ramo criado:" />
+								<p:outputLabel value="#{item.ramoCriado}" />
+
+								<p:outputLabel value="Disponibilizado:" />
+								<p:outputLabel value="#{item.disponibilizado}" />
+
+								<p:outputLabel value="Observação do ramo:" />
+								<p:outputLabel value="#{item.obsRamo}" />
+
+							</p:panelGrid>
+
+						</p:rowExpansion>
+
+					</p:dataTable>
+
+				</h:form>
+
+			</p:panel>
+
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

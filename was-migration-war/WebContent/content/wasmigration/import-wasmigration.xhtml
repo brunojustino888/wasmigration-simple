@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/resources/img/favicon.png" />
+	<h:outputStylesheet library="css" name="system-default.css" />
+</h:head>
+
+<h:body>
+
+	<ui:composition template="../../WEB-INF/templates/layout.xhtml">
+
+		<ui:define name="content">
+
+			<br />
+
+			<p:panel style="width:98%; margin:0 auto; display:block">
+				<h:form id="form1">
+
+					<p:growl showSummary="true" showDetail="false" id="growl1" />
+					<p:messages showDetail="true" showSummary="false" id="messages1" />
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:commandButton
+								action="include-wasmigration.xhtml?faces-redirect=true"
+								value="Novo aplicativo" icon="ui-icon-document" />
+							<span class="ui-separator"> <span
+								class="ui-icon ui-icon-grip-dotted-vertical" />
+							</span>
+							<p:commandButton
+								action="home-wasmigration.xhtml?faces-redirect=true"
+								immediate="true" value="Home de aplicativos" icon="ui-icon-home" />
+						</f:facet>
+
+						<f:facet name="right">
+							<p:menuButton value="Configurações">
+								<p:menuitem value="Modelo Excel" ajax="false" 
+									onclick="PrimeFaces.monitorDownload(start, stop);"
+									icon="ui-icon-arrowthick-1-s">
+									<p:fileDownload value="#{uploadXlsBean.downloadFile}" />
+								</p:menuitem>
+							</p:menuButton>
+						</f:facet>
+					</p:toolbar>
+				</h:form>
+
+				<script type="text/javascript">
+					function start() {
+					    PF('statusDialog').show();
+					}
+					function stop() {
+					    PF('statusDialog').hide();
+					}
+				</script>
+
+				<h2 align="center" class="textDefault">Importação de planilha
+					Excel</h2>
+				<h5 align="center">
+					<span style="color: #400040">Obs:</span> Você pode importar
+					planilhas no formato xls ou no formato xlsx para alimentar o
+					sistema. <br />Para isso baixe o modelo de importação em <b>Configurações
+						-> Modelo Excel.</b><br />
+				</h5>
+
+				<div style="width: 300px; margin: 0 auto; display: block">
+
+					<h:form enctype="multipart/form-data">
+						<div>
+							<p:fileUpload value="#{uploadXlsBean.file}"
+								style="width: 200px; margin: 0 auto; display: block"
+								label="Escolher arquivo..." mode="advanced"
+								dragDropSupport="true"
+								validatorMessage="Arquivo inválido para importação."
+								rendered="#{!uploadXlsBean.uploadButtomVisible}"
+								invalidFileMessage="Arquivo inválido para importação."
+								allowTypes="/(\.|\/)(xls|xlsx)$/"
+								invalidSizeMessage="O arquivo ultrapassa o limite de upload."
+								update="messages, form1:growl1, formConfirmUpload, @form"
+								auto="true" uploadLabel="Carregar planilha"
+								cancelLabel="Cancelar"
+								fileUploadListener="#{uploadXlsBean.handleFileUpload}" />
+							<p:growl id="messages" showDetail="true" />
+						</div>
+						<div style="text-align:center">
+							<p:outputLabel value="#{uploadXlsBean.messagePreUpload()}"
+								rendered="#{uploadXlsBean.uploadButtomVisible}"
+								style="color:darkblue" />
+						</div>
+					</h:form>
+
+					<h:form id="formConfirmUpload">
+						<br />
+						<p:commandButton style="margin:0 auto; display:block"
+							value="Finalizar importação" ajax="false"
+							action="#{uploadXlsBean.upload()}"
+							rendered="#{uploadXlsBean.uploadButtomVisible}" />
+					</h:form>
+
+				</div>
+
+			</p:panel>
+
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 70px; /* altura do seu footer */
+}
+
+.footer {
+    position: absolute;
+    bottom:0;
+    width:100%;
+    background-color: #ffffff; 
+    border-top: 1px solid #bed6f8;
+    color:#000000;
+}
+
+.tipo {
+	text-align:center;
+}
+
+.iconeLancamento{
+	margin-top: 6px;
+}
+
+.valor{
+	text-align:center;	
+}
+ 
+.acoes{
+	text-align:center;
+}
+
+.ui-fileupload-buttonbar .ui-button{
+	margin-left:30px;
+}
+
+.ui-widget .ui-icon.fa, .ui-icon.fa {
+    background: none repeat scroll 0 0 transparent!important;
+    text-indent: 0!important;
+    margin-right: 3px;
+    margin-top: 2.7px;
+} 
+
+.ui-chkbox .ui-chkbox-box {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+.ui-menuitem-text{
+	color:#547DAB;	
+	font-weight: bold;
+}
+
+.textDefault{
+	color:#547DAB;	
+}
+
+.gradientBack {
+  background: radial-gradient(circle, white, #CCE3FF, white);
+}
+
+.idNumberColumn{
+	text-align:center;
+}
+
+.statusColumn{
+	text-align:center;
+}
+
+.centroCustoColumn{
+	text-align:center;
+}
+
+.dataPrevistaTerminoColumn{
+	text-align:center;
+}
+
+.accessColumn{
+	text-align:center;
+}
+
+.ramoCriadoColumn{
+	text-align:center;
+}
+
+.disponibilizadoColumn{
+	text-align:center;
+}
+
+.labelSubTable{
+	width:25%;
+}
+
+.valueSubTable{
+	width:75%;
+}
+
+.alignLeft{
+	text-align:left;
+}
+
+.alignRight{
+	text-align:right;
+}
+
+.alignCenter{
+	text-align:center;
+}
+
+.withoutBorder {
+	border: 0px;	
+}

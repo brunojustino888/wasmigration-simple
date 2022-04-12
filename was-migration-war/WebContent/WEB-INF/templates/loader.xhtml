@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+<h:body style="background-color:lightgray">
+	
+	<ui:composition>
+
+		<h:form>  
+		
+<!-- 			<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;"> -->
+			
+<!-- 				<f:facet name="default" /> -->
+			
+<!-- 				<f:facet name="start"> -->
+<!-- 					<p:graphicImage name="ajax-loader.gif" library="img" /> -->
+<!-- 				</f:facet> -->
+			
+<!-- 				<f:facet name="complete" /> -->
+			
+<!-- 			</p:ajaxStatus> -->
+			
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+			
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+				<p:graphicImage name="ajax-loader.gif" library="img" />
+			</p:dialog>
+			
+		</h:form>
+			
+	</ui:composition>	
+	
+</h:body>
+
+</html>

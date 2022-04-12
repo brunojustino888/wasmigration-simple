@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body style="background-color:lightgray">
+
+	<ui:composition>
+
+		<h:form id="formMenu">
+
+			<br />
+
+			<p:menubar style="width:98%; margin:0 auto; display:block">
+
+				<p:menuitem>
+					<p:graphicImage url="../../resources/img/logo.png"
+						style="margin:2px" />
+				</p:menuitem>
+
+				<p:submenu label="#{msg.menuFirstItem}"
+					style="margin-top:30px; font-size:1.3em">
+					<p:menuitem value="#{msg.menuFirstSubItem}"
+						action="/content/wasmigration/home-wasmigration.xhtml?faces-redirect=true"
+						icon="ui-icon-home" />
+					<p:menuitem value="#{msg.menuSecondSubItem}"
+						action="/content/wasmigration/include-wasmigration.xhtml?faces-redirect=true"
+						icon="ui-icon-plus" />
+					<p:menuitem value="Importar planilha" icon="ui-icon-disk"
+						action="/content/wasmigration/import-wasmigration.xhtml?faces-redirect=true"
+						immediate="true" />
+					<p:menuitem value="Exportar dados" icon="ui-icon-extlink"
+						action="/content/wasmigration/export-wasmigration.xhtml?faces-redirect=true" />
+				</p:submenu>
+				
+				<p:submenu label="FAQ"
+					style="margin-top:30px; font-size:1.3em">
+					<p:menuitem value="Dúvidas frequentes" action="/content/faq/faq-home.xhtml?faces-redirect=true" immediate="true" />
+					<p:menuitem value="Cadastrar FAQ" action="/content/faq/faq-include.xhtml?faces-redirect=true" immediate="true" />
+				</p:submenu>
+				 
+				<p:menuitem value="Download de documentos da migração WAS v8.5" action="/content/downloads/downloads-home.xhtml?faces-redirect=true" style="margin-top:29px; font-size:1.3em" immediate="true" />
+				
+				<p:menuitem value="Informações" action="/index.xhtml?faces-redirect=true" style="margin-top:29px; font-size:1.3em" immediate="true" />
+				
+				<p:submenu icon="ui-icon-gear" style="float:right"
+					label="${pageContext.request.remoteUser}">
+
+					<p:submenu label="Minha Conta" icon="ui-icon-refresh">
+						<p:menuitem value="Alterar senha" icon="ui-icon-disk" />
+						<p:menuitem value="Atualizar cadastro"
+							icon="ui-icon-arrowrefresh-1-w" />
+					</p:submenu>
+
+					<p:submenu label="Suporte" icon="ui-icon-newwin">
+						<p:menuitem value="Ajuda" icon="ui-icon-help" />
+					</p:submenu>
+
+					<p:separator />
+
+					<p:menuitem value="Sair" icon="ui-icon-power" />
+
+				</p:submenu>
+
+			</p:menubar>
+
+			<p:autoUpdate>
+				<p:growl showSummary="true" showDetail="false" id="globalGrowl" />
+				<p:messages showDetail="true" showSummary="false"
+					id="globalMessages" />
+			</p:autoUpdate>
+
+		</h:form>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

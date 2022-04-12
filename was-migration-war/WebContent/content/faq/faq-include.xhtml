@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/resources/img/favicon.png" />
+	<h:outputStylesheet library="css" name="system-default.css" />
+</h:head>
+
+<h:body>
+
+	<ui:composition template="../../WEB-INF/templates/layout.xhtml">
+
+		<ui:define name="content">
+
+			<br />
+
+			<p:panel style="width:98%; margin:0 auto; display:block">
+
+
+				<h:form id="Campo">
+
+					<p:growl showSummary="true" showDetail="false" />
+					<p:messages showDetail="true" showSummary="false" />
+
+					<h2 align="center" class="textDefault">FAQ - Inclusão</h2>
+					<h5 align="center">Abaixo você poderá incluir alguma dica ou
+						dúvida frequente pertinente ao processo de migração de aplicações.</h5>
+
+					<p:outputPanel id="editDetail" style="text-align:center;">
+						<p:panelGrid columns="2" style="margin:0 auto; display:block; width:600px"
+							columnClasses="label,value">
+							<h:outputText value="Título:" />
+							<h:inputText value="#{faqHomeBean.includeItem.title}" required="true" style="width:300px" id="Título"/>
+							<h:outputText value="Descrição" />
+							<h:inputTextarea style="width:500px; height:300px" id="Descrição"
+								value="#{faqHomeBean.includeItem.description}" required="true" />
+						</p:panelGrid>
+						<div>
+							<p:commandButton value="Incluir" update="@form"
+								action="#{faqHomeBean.incluir()}"
+								style="margin:0 auto; display:block; width:100px" />
+						</div>
+					</p:outputPanel>
+
+				</h:form>
+
+			</p:panel>
+
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

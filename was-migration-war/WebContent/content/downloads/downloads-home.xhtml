@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/resources/img/favicon.png" />
+	<h:outputStylesheet library="css" name="system-default.css" />
+</h:head>
+
+<h:body>
+
+	<ui:composition template="../../WEB-INF/templates/layout.xhtml">
+
+		<ui:define name="content">
+
+			<br />
+
+			<p:panel style="width:98%; margin:0 auto; display:block">
+
+				<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+					draggable="false" closable="false" resizable="false">
+					<p:graphicImage library="img" name="ajax-loader.gif" />
+				</p:dialog>
+
+				<h:form>
+
+					<p:growl showSummary="true" showDetail="false" />
+					<p:messages showDetail="true" showSummary="false" />
+
+					<h2 align="center" class="textDefault">Downloads</h2>
+					<h5 align="center">Abaixo estão os documentos que você pode	baixar:</h5>
+						
+					<hr /><br />
+					
+					<div style="margin:0 auto; display:block; width:499px; height:200px">
+						<div style="margin:0 auto; display:block; width:399px " >
+							<p:commandButton value="Download" ajax="false" style="margin-top:5px; margin-right:5px; float:left;"
+								onclick="PrimeFaces.monitorDownload(start, stop);"
+								icon="ui-icon-arrowthick-1-s">
+								<p:fileDownload value="#{downloadsBean.file}" />
+							</p:commandButton>
+							<p:graphicImage library="img" name="pdf.png" style="float:left"/>
+							<h:outputText value="Procedimentos de migração WASv85 intranet_v1.3.pdf" style="float:left; margin-top:10px; margin-bottom:10px" />
+						</div>
+						<br />
+						<div style="margin:0 auto; display:block; width:399px " >
+							<p:commandButton value="Download" ajax="false" style="margin-top:5px; margin-right:5px; float:left;"
+								onclick="PrimeFaces.monitorDownload(start, stop);"
+								icon="ui-icon-arrowthick-1-s">
+								<p:fileDownload value="#{downloadsBean.file1}" />
+							</p:commandButton>
+							<p:graphicImage library="img" name="pdf.png" style="float:left"/>
+							<h:outputText value="Padrões de nomenclatura WASv85 intranet_v1.0.pdf" style="float:left; margin-top:10px; margin-bottom:10px" />
+						</div>
+						<br />
+						<div style="margin:0 auto; display:block; width:399px " >
+							<p:commandButton value="Download" ajax="false" style="margin-top:5px; margin-right:5px; float:left;"
+								onclick="PrimeFaces.monitorDownload(start, stop);"
+								icon="ui-icon-arrowthick-1-s">
+								<p:fileDownload value="#{downloadsBean.file3}" />
+							</p:commandButton>
+							<p:graphicImage library="img" name="pdf.png" style="float:left"/>
+							<h:outputText value="JAAS - Manual do usuário_v1.1.pdf" style="float:left; margin-top:10px; margin-bottom:10px" />
+						</div>
+						<br />
+						<div style="margin:0 auto; display:block; width:399px " >
+							<p:commandButton value="Download" ajax="false" style="margin-top:5px; margin-right:5px; float:left;"
+								onclick="PrimeFaces.monitorDownload(start, stop);"
+								icon="ui-icon-arrowthick-1-s">
+								<p:fileDownload value="#{downloadsBean.file4}" />
+							</p:commandButton>
+							<p:graphicImage library="img" name="pdf.png" style="float:left"/>
+							<h:outputText value="Armazenamento de jar's no StarTeam_v1.1.pdf" style="float:left; margin-top:10px; margin-bottom:10px" />
+						</div>
+						<br />
+						<div style="margin:0 auto; display:block; width:399px" >
+							<p:commandButton value="Download" ajax="false" style="margin-top:5px; margin-right:5px; float:left;"
+								onclick="PrimeFaces.monitorDownload(start, stop);"
+								icon="ui-icon-arrowthick-1-s">
+								<p:fileDownload value="#{downloadsBean.file2}" />
+							</p:commandButton>
+							<p:graphicImage library="img" name="word.png" style="float:left; width:32px"/>
+							<h:outputText value="Laudo de migração WASv85_cccc_v1.1.docx" style="float:left; margin-top:10px; margin-bottom:10px" />
+						</div>
+						<br />
+					</div>
+
+				</h:form>
+
+				<script type="text/javascript">
+					function start() {
+						PF('statusDialog').show();
+					}
+					function stop() {
+						PF('statusDialog').hide();
+					}
+				</script>
+
+			</p:panel>
+
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

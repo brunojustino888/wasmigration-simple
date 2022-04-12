@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/resources/img/favicon.png" />
+	<h:outputStylesheet library="css" name="system-default.css" />
+</h:head>
+
+<h:body>
+
+	<ui:composition template="../../WEB-INF/templates/layout.xhtml">
+
+		<ui:define name="content">
+
+			<br />
+
+			<p:panel style="width:98%; margin:0 auto; display:block">
+
+				<h:form>
+
+					<p:toolbar>
+						<f:facet name="left">
+							<p:commandButton
+								action="include-wasmigration.xhtml?faces-redirect=true"
+								immediate="true" value="Novo aplicativo" icon="ui-icon-document" />
+							<span class="ui-separator"> <span
+								class="ui-icon ui-icon-grip-dotted-vertical" />
+							</span>
+							<p:commandButton
+								action="home-wasmigration.xhtml?faces-redirect=true"
+								immediate="true" value="Home de aplicativos" icon="ui-icon-home" />
+						</f:facet>
+					</p:toolbar>
+
+					
+					<h2 class="textDefault" style="text-align:center">Editar informações do aplicativo</h2>
+					<h5 style="text-align:center">
+						<span style="color: #400040">Dica:</span> preencha os campos com
+						os valores e clique em ""finalizar edição".
+					</h5>
+
+					<p:panelGrid id="mainPanel" style="width:300px; margin:0 auto; display:block">
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Status do app:" for="statusField" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="statusField"
+									value="#{editWasMigrationBean.appItem.status}" required="true">
+									<f:selectItems
+										value="#{editWasMigrationBean.loadComboStatus()}" var="status"
+										itemLabel="#{status}" itemValue="#{status}" />
+									<p:ajax event="change"
+										listener="#{editWasMigrationBean.verificaStatus()}"
+										update="mainPanel" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Centro de custo:" for="ccccField" />
+							</p:column>
+							<p:column>
+								<p:inputText id="ccccField"
+									value="#{editWasMigrationBean.appItem.centroCusto}"
+									required="true" />
+							</p:column>
+						</p:row>
+
+						<p:outputPanel
+							rendered="#{editWasMigrationBean.calendarPrevisao}">
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Previsão:" for="datePrev" />
+								</p:column>
+								<p:column>
+									<p:calendar id="datePrev"
+										mindate="#{editWasMigrationBean.today()}"
+										value="#{editWasMigrationBean.appItem.dataPrevistaTermino}">
+									</p:calendar>
+								</p:column>
+							</p:row>
+						</p:outputPanel>
+
+						<p:outputPanel
+							rendered="#{editWasMigrationBean.calendarTermino}">
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Data de término:" for="endDate" />
+								</p:column>
+								<p:column>
+									<p:calendar id="endDate"
+										maxdate="#{editWasMigrationBean.today()}"
+										value="#{editWasMigrationBean.appItem.dataTermino}" />
+								</p:column>
+							</p:row>
+						</p:outputPanel>
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Acesso StarTeam:" for="acessField" />
+							</p:column>
+							<p:column>
+								<p:selectBooleanButton
+									value="#{editWasMigrationBean.acessoStarteamButton}"
+									id="acessField" onLabel="Sim" offLabel="Não" required="true" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Ramo criado:" for="ramoField" />
+							</p:column>
+							<p:column>
+								<p:selectBooleanButton
+									value="#{editWasMigrationBean.ramoCriadoButton}"
+									id="ramoField" onLabel="Sim" offLabel="Não" required="true" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Disponibilizado:"
+									for="disponibilizadoField" />
+							</p:column>
+
+							<p:column>
+								<p:selectBooleanButton id="disponibilizadoField"
+									value="#{editWasMigrationBean.disponibilizadoButton}"
+									onLabel="Sim" offLabel="Não" required="true" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Observação do ramo:" for="obsramoField" />
+							</p:column>
+							<p:column>
+								<p:inputTextarea id="obsramoField"
+									value="#{editWasMigrationBean.appItem.obsRamo}" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Observação:" for="obsField" />
+							</p:column>
+							<p:column>
+								<p:inputTextarea id="obsField"
+									value="#{editWasMigrationBean.appItem.observacao}" />
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+
+					<br />
+
+					<p:commandButton actionListener="#{editWasMigrationBean.editar()}"
+					action="#{editWasMigrationBean.redirectHome()}"
+						value="Aplicar Alterações" style="margin:0 auto; display:block">
+						<p:confirm header="Confirmação"
+							message="Você confirma a alteração dos dados? "
+							icon="ui-icon-alert" />
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+						closable="false">
+						<p:commandButton value="Confirmar" resetValues="true"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Cancelar" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
+					<br />
+
+					<h1>#{editWasMigrationBean.item}</h1>
+
+
+				</h:form>
+
+			</p:panel>
+
+		</ui:define>
+
+	</ui:composition>
+
+</h:body>
+
+</html>

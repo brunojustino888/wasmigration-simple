@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+ 
+<f:loadBundle basename="resources.application" var="msg"/>
+
+	<h:head>
+	    <title><h:outputText value="#{msg.welcomeTitle}" /></title>
+	    <link rel="shortcut icon" type="image/x-icon" href="/resources/img/favicon.png" />
+	    <h:outputStylesheet library="css" name="system-default.css" />
+	</h:head>
+	
+	<h:body styleClass="gradientBack">
+		
+		<br />
+		
+		<div style="margin-left:15px">
+			<div style="float:left; margin-right:15px">
+				<p:graphicImage url="resources/img/logo.png"/>
+			</div>	
+			<h3 style="float:left; margin-right:15px; color:#547DAB">Página de erro</h3>
+			<br/><br style="margin-top:15px" />
+		</div>
+		<br /><br /><br/>
+		<h1 style="float:none; text-align:center; color:#400040">Erro 500 - Erro interno no servidor</h1>
+	
+		<ui:include src="../templates/loader.xhtml" />
+	
+		<ui:insert name="footer" >
+			<ui:include src="../templates/footer.xhtml" />
+		</ui:insert>
+	
+	</h:body>
+	
+</html>
